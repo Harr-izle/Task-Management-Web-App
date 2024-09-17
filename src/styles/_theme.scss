@@ -4,6 +4,7 @@
 
 $light-mode: (
     "bg-color":v.$bg-light,
+    "header":v.$header-light,
     "text-color":v.$light-text,
     "dropdown-bg":v.$dropdown-bg-light,
     "subtask-idle":v.$idle-light,
@@ -16,6 +17,7 @@ $light-mode: (
 
 $dark-mode: (
     "bg-color":v.$bg-dark,
+    "header":v.$header-dark,
     "text-color":v.$dark-text,
     "dropdown-bg":v.$dropdown-bg-dark,
     "subtask-idle":v.$idle-dark,
