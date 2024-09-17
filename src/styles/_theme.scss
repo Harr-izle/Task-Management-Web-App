@@ -9,7 +9,8 @@ $light-mode: (
     "subtask-idle":v.$idle-light,
     "subtask-hover":v.$subtask-hover-light,
     "sub-text":v.$sub-text,
-    "btn-sub":v.$btn-sub
+    "btn-sub":v.$btn-sub,
+    "line":v.$line-light
 );
 
 
@@ -20,7 +21,8 @@ $dark-mode: (
     "subtask-idle":v.$idle-dark,
     "subtask-hover":v.$subtask-hover-dark,
     "sub-text":v.$sub-text,
-    "btn-sub":v.$btn-sub
+    "btn-sub":v.$btn-sub,
+    "line":v.$line-dark
 );
 
 

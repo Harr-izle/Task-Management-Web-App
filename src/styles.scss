@@ -7,7 +7,19 @@
     padding: 0;
     box-sizing: border-box
 }
+:root {
+    @each $key, $value in $light-mode {
+      --#{$key}: #{$value};
+    }
+  }
+  
+  .dark-mode {
+    @each $key, $value in $dark-mode {
+      --#{$key}: #{$value};
+    }
+  }
 
 body{
     font-family: $font-family;
+    background-color: var(--bg-color);
 }
