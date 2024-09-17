@@ -1,3 +1,4 @@
+import { ApiService } from './services/api.service';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./components/header/header.component";
@@ -12,4 +13,10 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
 })
 export class AppComponent {
   title = 'Task-Management-Web-App';
+  constructor(private apiService:ApiService){}
+
+
+  ngOnInit(){
+    this.apiService.fetchData().subscribe(res=>console.log(res))
+  }
 }
