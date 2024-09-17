@@ -48,6 +48,19 @@
             font-weight: $font-weight;
         }
     }
+    .close-sidebar{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        
+        span{
+            color: var(--sub-text);
+            font-size: $header-md;
+            font-weight: $font-weight;
+        }
+    }
 }
 
     
