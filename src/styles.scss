@@ -1,25 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
-@use './styles/mixins';
-@use './styles/variables';
+@import './styles/mixins';
+@import './styles/variables';
+@import './styles/theme';
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-:root {
-    @each $key, $value in $light-mode {
-      --#{$key}: #{$value};
-    }
-  }
-  
-  .dark-mode {
-    @each $key, $value in $dark-mode {
-      --#{$key}: #{$value};
-    }
-  }
 
-body{
-    font-family: $font-family;
-    background-color: var(--bg-color);
+:root {
+  @each $key, $value in $light-mode {
+    --#{$key}: #{$value};
+  }
+}
+
+.light {
+  @each $key, $value in $light-mode {
+    --#{$key}: #{$value};
+  }
+}
+
+.dark {
+  @each $key, $value in $dark-mode {
+    --#{$key}: #{$value};
+  }
+}
+
+body {
+  font-family: $font-family;
+  background-color: var(--bg-color);
 }
