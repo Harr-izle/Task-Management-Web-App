@@ -1,0 +1,26 @@
+//theme colors
+@use '../styles/variables' as v;
+
+
+$light-mode: (
+    "bg-color":v.$bg-light,
+    "text-color":v.$light-text,
+    "dropdown-bg":v.$dropdown-bg-light,
+    "subtask-idle":v.$idle-light,
+    "subtask-hover":v.$subtask-hover-light,
+    "sub-text":v.$sub-text,
+    "btn-sub":v.$btn-sub
+);
+
+
+$dark-mode: (
+    "bg-color":v.$bg-dark,
+    "text-color":v.$dark-text,
+    "dropdown-bg":v.$dropdown-bg-dark,
+    "subtask-idle":v.$idle-dark,
+    "subtask-hover":v.$subtask-hover-dark,
+    "sub-text":v.$sub-text,
+    "btn-sub":v.$btn-sub
+);
+
+
