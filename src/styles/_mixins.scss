@@ -1,7 +1,14 @@
-@mixin flex-layout($direction, $justify, $align,$gap) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: $justify;
-    align-items: $align;
-    gap: $gap;
+@mixin flex-row($justify:center, $align: center,$gap:0) {
+  display: flex;
+  flex-direction: row;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-column($justify:center, $align: center, $gap:0) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
 }

@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 //font
-$font-family: 'Plus Jakarta Sans', sans-serif;
+$font-family: 'Plus Jakarta Sans';
 
 //font size
 $header-xl:1.5rem;
 $header-l:1.125rem;
-$header-m:0.9375rem;
-$header-s:0.75rem;
+$header-md:0.9375rem;
+$header-sm:0.75rem;
 $body-lg:0.8125rem;
 $body-m: 0.75rem;
 
@@ -34,7 +34,7 @@ $subtask-hover-dark:#635FC7;
 
 //backgroundColors
 $bg-light:#F4F7FD;
-$bg-dark:#2B2C37;
+$bg-dark:#000112;
 $header-light:#FFF;
 $header-dark:#2B2C37;
 
@@ -53,6 +53,9 @@ $btn-sub:#635FC7;
 //line
 $line-light:#E4EBFA;
 $line-dark:#3E3F4E;
+
+//height
+$header-height: 4rem;
 
 
 

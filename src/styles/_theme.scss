@@ -1,30 +1,30 @@
 //theme colors
-@use '../styles/variables' as v;
+@use'../styles/variables';
 
 
 $light-mode: (
-    "bg-color":v.$bg-light,
-    "header":v.$header-light,
-    "text-color":v.$light-text,
-    "dropdown-bg":v.$dropdown-bg-light,
-    "subtask-idle":v.$idle-light,
-    "subtask-hover":v.$subtask-hover-light,
-    "sub-text":v.$sub-text,
-    "btn-sub":v.$btn-sub,
-    "line":v.$line-light
+    "bg-color":$bg-light,
+    "header":$header-light,
+    "text-color":$light-text,
+    "dropdown-bg":$dropdown-bg-light,
+    "subtask-idle":$idle-light,
+    "subtask-hover":$subtask-hover-light,
+    "sub-text":$sub-text,
+    "btn-sub":$btn-sub,
+    "line":$line-light
 );
 
 
 $dark-mode: (
-    "bg-color":v.$bg-dark,
-    "header":v.$header-dark,
-    "text-color":v.$dark-text,
-    "dropdown-bg":v.$dropdown-bg-dark,
-    "subtask-idle":v.$idle-dark,
-    "subtask-hover":v.$subtask-hover-dark,
-    "sub-text":v.$sub-text,
-    "btn-sub":v.$btn-sub,
-    "line":v.$line-dark
+    "bg-color":$bg-dark,
+    "header":$header-dark,
+    "text-color":$dark-text,
+    "dropdown-bg":$dropdown-bg-dark,
+    "subtask-idle":$idle-dark,
+    "subtask-hover":$subtask-hover-dark,
+    "sub-text":$sub-text,
+    "btn-sub":$btn-sub,
+    "line":$line-dark
 );
 
 

@@ -1,0 +1,17 @@
+// Define your breakpoints using a map
+@use "sass:map";
+
+$breakpoints: (
+  mobile: 23.4375em, // 375px
+  tablet: 48em,      // 768px
+  desktop: 90em      // 1440px
+);
+
+// Mixin for handling media queries
+@mixin mq($key) {
+  $size: map.get($breakpoints, $key);
+
+  @media (min-width: $size) {
+    @content;
+  }
+}
