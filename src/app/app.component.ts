@@ -17,6 +17,6 @@ export class AppComponent {
 
 
   ngOnInit(){
-    this.apiService.fetchData().subscribe(res=>console.log(res))
+    this.apiService.getBoards().subscribe(res=>console.log(res))
   }
 }
