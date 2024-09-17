@@ -1,0 +1,62 @@
+.theme-switch{
+    width: 15.6875rem;
+    height: 3rem;
+    background-color:var(--bg-color);
+    border-radius: 0.5rem;
+    margin-top: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    $switch-width: 40px;
+    $switch-height: 20px;
+    $switch-padding: 2px;
+    $switch-color: #635FC7;
+    $switch-knob-color: white;
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: $switch-width;
+      height: $switch-height;
+    
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    
+        &:checked + .slider:before {
+          transform: translateX($switch-width - $switch-height);
+        }
+    
+        &:focus + .slider {
+          box-shadow: 0 0 1px $switch-color;
+        }
+      }
+    
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $switch-color;
+        transition: .4s;
+        border-radius: $switch-height;
+    
+        &:before {
+          position: absolute;
+          content: "";
+          height: $switch-height - (2 * $switch-padding);
+          width: $switch-height - (2 * $switch-padding);
+          left: $switch-padding;
+          bottom: $switch-padding;
+          background-color: $switch-knob-color;
+          transition: .4s;
+          border-radius: 50%;
+        }
+      }
+    }
+}
