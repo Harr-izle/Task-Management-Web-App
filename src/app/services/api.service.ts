@@ -7,12 +7,23 @@ import { IBoard } from '../interfaces/board';
   providedIn: 'root'
 })
 export class ApiService {
-  apiUrl:string = '../../assets/data/data.json';
+  apiUrl: string = '../../assets/data/data.json';
 
   constructor(private http: HttpClient) { }
 
- fetchData():Observable<IBoard> {
-   return this.http.get<IBoard>(this.apiUrl);
- }
-  
+  getBoards(): Observable<IBoard[]> {
+    return this.http.get<IBoard[]>(this.apiUrl);
+  }
+
+  addBoard(board: IBoard): Observable<IBoard> {
+    return this.http.post<IBoard>(this.apiUrl, board);
+  }
+
+  updateBoard(board: IBoard): Observable<IBoard> {
+    return this.http.put<IBoard>(`${this.apiUrl}/${board.id}`, board);
+  }
+
+  deleteBoard(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
