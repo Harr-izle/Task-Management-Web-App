@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import * as BoardActions from './board.actions';
+import {v4 as uuid} from 'uuid';
 
 @Injectable()
 export class BoardEffects {
@@ -11,6 +12,9 @@ export class BoardEffects {
     ofType(BoardActions.loadBoards),
     switchMap(() => this.apiService.getBoards()
       .pipe(
+        tap(data => console.log(data),
+        ),
+        map(data => data.boards.map(board => {return {...board, id:uuid()}})),
         map(boards => BoardActions.loadBoardsSuccess({ boards })),
         catchError(error => of(BoardActions.loadBoardsFailure({ error })))
       ))
@@ -20,6 +24,7 @@ export class BoardEffects {
     ofType(BoardActions.addBoard),
     mergeMap(({ board }) => this.apiService.addBoard(board)
       .pipe(
+        
         map(newBoard => BoardActions.addBoardSuccess({ board: newBoard })),
         catchError(error => of(BoardActions.addBoardFailure({ error })))
       ))

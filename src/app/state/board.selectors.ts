@@ -19,3 +19,9 @@ export const selectBoardError = createSelector(
   selectBoardState,
   (state: BoardState) => state.error
 );
+export const selectBoards = createSelector(
+  selectBoardState, 
+  (state: BoardState) => selectAllBoards(state)
+
+  
+)

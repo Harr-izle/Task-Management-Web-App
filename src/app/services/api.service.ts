@@ -11,8 +11,9 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getBoards(): Observable<IBoard[]> {
-    return this.http.get<IBoard[]>(this.apiUrl);
+  getBoards() {
+    // return this.http.get<IBoard[]>(this.apiUrl);
+    return this.http.get<{boards: IBoard[]}>(this.apiUrl);
   }
 
   addBoard(board: IBoard): Observable<IBoard> {

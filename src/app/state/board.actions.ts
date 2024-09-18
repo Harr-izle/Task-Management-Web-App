@@ -49,3 +49,8 @@ export const deleteBoardFailure = createAction(
   '[Board] Delete Board Failure',
   props<{ error: any }>()
 );
+
+export const selectBoard = createAction(
+  '[Board] Select Board',
+  props<{ boardId: string }>()
+);

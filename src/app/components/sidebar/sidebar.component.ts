@@ -31,11 +31,11 @@ export class SidebarComponent implements OnInit {
   }
 
   selectBoard(board: IBoard) {
-    this.store.dispatch(BoardActions.selectBoard({ boardId: board.id }));
+    // this.store.dispatch(BoardActions.selectBoard({ boardId: board.id }));
   }
 
   createNewBoard() {
     // Dispatch action to create a new board
-    this.store.dispatch(BoardActions.createBoard());
+    // this.store.dispatch(BoardActions.createBoard());
   }
 }
