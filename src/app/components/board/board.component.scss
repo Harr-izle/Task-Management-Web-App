@@ -1,0 +1,33 @@
+@import "../../../styles/variables";
+@import "../../../styles/theme";
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.task {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  height: fit-content;
+  background-color: red;
+
+  .columns {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cards {
+    width: 17.5rem;
+    height: 5.5rem;
+    background-color: yellow;
+
+    
+    .new-column {
+        width: 17.5rem;
+        height: 5.5rem;
+        background-color: yellow;
+      }
+  }
+
+ 
+}

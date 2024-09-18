@@ -68,29 +68,36 @@
       align-items: center;
       gap: 1rem;
       margin-top: 2.5rem;
+      width: 17.25rem;
+      height: 3rem;
+      border-radius: 0rem 6.25rem 6.25rem 0rem;
       transition: all 0.3s ease;
-      
 
       &:hover {
         cursor: pointer;
         background-color: var(--secondary);
         opacity: 0.8;
-        width: 17.25rem;
-        height: 3rem;
-        border-radius: 0rem 6.25rem 6.25rem 0rem;
-        
       }
 
       svg {
         margin-left: 1rem;
-        fill:#635FC7;
+        fill: #635fc7;
       }
 
       span {
-        color: #635FC7;
+        color: #635fc7;
         font-size: $header-md;
         font-weight: $font-weight;
       }
     }
+    
+  }
+}
+.open-sidebar {
+  position: absolute;
+  bottom: 6rem;
+
+  img{
+    cursor: pointer;
   }
 }

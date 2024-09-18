@@ -11,6 +11,7 @@
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid var(--line);
+  // border-bottom-width: calc(100% - 18.75rem);
 
   .logo {
     border-right: 1px solid var(--line);
