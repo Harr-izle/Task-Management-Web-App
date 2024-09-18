@@ -1,30 +1,28 @@
 //theme colors
-@use'../styles/variables';
-
+@use "../styles/variables";
 
 $light-mode: (
-    "bg-color":$bg-light,
-    "header":$header-light,
-    "text-color":$light-text,
-    "dropdown-bg":$dropdown-bg-light,
-    "subtask-idle":$idle-light,
-    "subtask-hover":$subtask-hover-light,
-    "sub-text":$sub-text,
-    "btn-sub":$btn-sub,
-    "line":$line-light
+  "bg-color": $bg-light,
+  "header": $header-light,
+  "text-color": $light-text,
+  "dropdown-bg": $dropdown-bg-light,
+  "subtask-idle": $idle-light,
+  "subtask-hover": $subtask-hover-light,
+  "sub-text": $sub-text,
+  "btn-sub": $btn-sub,
+  "line": $line-light,
+  "secondary": $button-secondary,
 );
-
 
 $dark-mode: (
-    "bg-color":$bg-dark,
-    "header":$header-dark,
-    "text-color":$dark-text,
-    "dropdown-bg":$dropdown-bg-dark,
-    "subtask-idle":$idle-dark,
-    "subtask-hover":$subtask-hover-dark,
-    "sub-text":$sub-text,
-    "btn-sub":$btn-sub,
-    "line":$line-dark
+  "bg-color": $bg-dark,
+  "header": $header-dark,
+  "text-color": $dark-text,
+  "dropdown-bg": $dropdown-bg-dark,
+  "subtask-idle": $idle-dark,
+  "subtask-hover": $subtask-hover-dark,
+  "sub-text": $sub-text,
+  "btn-sub": $btn-sub,
+  "line": $line-dark,
+  "secondary": $button-secondary-hover,
 );
-
-
