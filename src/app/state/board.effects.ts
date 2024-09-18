@@ -14,7 +14,7 @@ export class BoardEffects {
       .pipe(
         tap(data => console.log(data),
         ),
-        map(data => data.boards.map(board => {return {...board, id:uuid()}})),
+        map(data => data.boards.map(board => ({...board, id:uuid()}))),
         map(boards => BoardActions.loadBoardsSuccess({ boards })),
         catchError(error => of(BoardActions.loadBoardsFailure({ error })))
       ))

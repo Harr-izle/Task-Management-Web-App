@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,9 +14,10 @@ import * as BoardActions from '../../state/board.actions';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent{
   isSidebarOpen: boolean = true;
   boards$: Observable<IBoard[]>;
+  selectedBoardId: string | null = null;
 
   constructor(private store: Store) {
     this.boards$ = this.store.select(selectAllBoards);
@@ -31,7 +32,8 @@ export class SidebarComponent implements OnInit {
   }
 
   selectBoard(board: IBoard) {
-    // this.store.dispatch(BoardActions.selectBoard({ boardId: board.id }));
+    this.selectedBoardId = board.id;
+    this.store.dispatch(BoardActions.selectBoard({ boardId: board.id }));
   }
 
   createNewBoard() {

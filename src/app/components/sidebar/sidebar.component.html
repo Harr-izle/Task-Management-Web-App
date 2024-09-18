@@ -4,7 +4,7 @@
       <h6>All Boards ({{ (boards$ | async)?.length || 0 }})</h6>
       <div class="all-boards">
         @for (board of boards$ | async; track board.id) {
-          <div class="board" (click)="selectBoard(board)">
+          <div class="board" (click)="selectBoard(board)" [class.active]="board.id === selectedBoardId">
             <span>
               <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
                 <path

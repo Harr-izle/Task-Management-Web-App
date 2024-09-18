@@ -1,7 +1,7 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
@@ -16,6 +16,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),
     provideStore({ board: boardReducer }),
+    provideState({
+      name: 'board',
+      reducer:boardReducer
+    }),
     provideEffects(BoardEffects),
     provideStoreDevtools({maxAge:25, logOnly: false}),
   ]
