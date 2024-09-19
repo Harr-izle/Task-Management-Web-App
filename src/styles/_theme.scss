@@ -12,6 +12,8 @@ $light-mode: (
   "btn-sub": $btn-sub,
   "line": $line-light,
   "secondary": $button-secondary,
+  "column":$new-column-bg-light,
+  
 );
 
 $dark-mode: (
@@ -25,4 +27,6 @@ $dark-mode: (
   "btn-sub": $btn-sub,
   "line": $line-dark,
   "secondary": $button-secondary-hover,
+  "column":$new-column-bg-dark,
+  
 );

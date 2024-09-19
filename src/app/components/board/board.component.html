@@ -1,26 +1,27 @@
-<div class="task">
-  @if (selectedBoard$ | async; as board) {
-    @for (column of board.columns; track column.name) {
-      <div class="columns">
-        <p>{{ column.name }}</p>
+
+  <div class="task">
+    @if (selectedBoard$ | async; as board) {
+      @for (column of board.columns; track column.name) {
+        <div class="columns">
+          <p><span>.</span>{{ column.name }} ({{ column.tasks.length }})</p>
+          <div class="cards">
+            @for (task of column.tasks; track task.title) {
+              <div class="card">
+                <h6>{{ task.title }}</h6>
+                <span>{{ getCompletedSubtasks(task) }} of {{ task.subtasks.length }} subtasks</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+      <div class="column">
         <div class="cards">
-          @for (task of column.tasks; track task.title) {
-            <div class="card">
-              <h6>{{ task.title }}</h6>
-              <span>{{ getCompletedSubtasks(task) }} of {{ task.subtasks.length }} subtasks</span>
-            </div>
-          }
+          <div class="new-column" (click)="addNewColumn()">
+            <span>+ New Column</span>
+          </div>
         </div>
       </div>
+    } @else {
+      <p>No board selected</p>
     }
-    <div class="columns">
-      <div class="cards">
-        <div class="new-column" (click)="addNewColumn()">
-          <span>+ New Column</span>
-        </div>
-      </div>
-    </div>
-  } @else {
-    <p>No board selected</p>
-  }
-</div>
+  </div>
