@@ -1,3 +1,4 @@
+import { AddnewEditTaskFormComponent } from './components/addnew-edit-task-form/addnew-edit-task-form.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -9,13 +10,19 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'create-edit-form',
+        redirectTo: 'view-task',
         pathMatch: 'full',
     },
 
+    // {
+    //     path: 'add-new-task-form',
+    //     loadComponent: () =>
+    //         import('./components/addnew-edit-task-form/addnew-edit-task-form.component').then((m) => m.AddnewEditTaskFormComponent),
+            
+    // },
     {
-        path: 'create-edit-form',
+        path: 'view-task',
         loadComponent: () =>
-            import('./components/create-edit-form/create-edit-form.component').then((m) => m.CreateEditFormComponent),
-    },
+            import('./components/view-task/view-task.component').then((m) => m.ViewTaskComponent),
+    }
 ];

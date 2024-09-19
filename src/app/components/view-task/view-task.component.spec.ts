@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateEditFormComponent } from './create-edit-form.component';
+import { ViewTaskComponent } from './view-task.component';
 
-describe('CreateEditFormComponent', () => {
-  let component: CreateEditFormComponent;
-  let fixture: ComponentFixture<CreateEditFormComponent>;
+describe('ViewTaskComponent', () => {
+  let component: ViewTaskComponent;
+  let fixture: ComponentFixture<ViewTaskComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateEditFormComponent]
+      imports: [ViewTaskComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CreateEditFormComponent);
+    fixture = TestBed.createComponent(ViewTaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

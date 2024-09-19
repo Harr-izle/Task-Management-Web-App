@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -15,8 +15,24 @@ import { IBoard } from '../../interfaces/board';
 })
 export class HeaderComponent {
   selectedBoard$: Observable<IBoard | undefined>;
+  isDropdownOpen = false;
 
-  constructor(public themeService: ThemeService, private store: Store) {
+  constructor(
+    public themeService: ThemeService,
+    private store: Store,
+    private elementRef: ElementRef
+  ) {
     this.selectedBoard$ = this.store.select(selectSelectedBoard);
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
+    }
   }
 }
