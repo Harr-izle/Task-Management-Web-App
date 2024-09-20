@@ -1,0 +1,111 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+@import "../../../styles/theme";
+@import "../../../styles/breakpoints";
+
+.bg-bg {
+  display: flex;
+  align-items: center;
+  form {
+    width: 30rem;
+    height: fit-content;
+    border-radius: 0.375rem;
+    background-color: var(--header);
+    padding: 2rem 2rem;
+    h6 {
+      font-size: $header-l;
+      color: var(--text-color);
+    }
+
+    .name {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-size: $header-sm;
+        color: var(--form-text);
+      }
+
+      input {
+        width: 26rem;
+        height: 2.5rem;
+        background-color: var(--header);
+        border-radius: 0.25rem;
+        border: 1px solid rgba(130, 143, 163, 0.25);
+        padding: 1rem 1rem;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .columns {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-size: $header-sm;
+        color: var(--form-text);
+      }
+
+      .col {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+        input {
+          width: 24.0625rem;
+          height: 2.5rem;
+          border-radius: 0.25rem;
+          border: 1px solid rgba(130, 143, 163, 0.25);
+          background: var(--header);
+          padding: 1rem 1rem;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .butts {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .add-col {
+        width: 26rem;
+        height: 2.5rem;
+        border-radius: 1.25rem;
+        border: none;
+        background-color: var(--secondary);
+        color: #635FC7;
+        font-size: 0.8125rem;
+        font-weight: $font-weight;
+
+        &:hover {
+          background-color: var(--secondary-hover);
+          cursor: pointer;
+        }
+      }
+
+      .create{
+        width: 26rem;
+        height: 2.5rem;
+        border-radius: 1.25rem;
+        border: none;
+        background-color: $button-ls;
+        color: #FFF;
+        font-size: 0.8125rem;
+        font-weight: $font-weight;
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'view-task',
+        redirectTo: 'add-edit-board-form',
         pathMatch: 'full',
     },
 
@@ -20,9 +20,15 @@ export const routes: Routes = [
     //         import('./components/addnew-edit-task-form/addnew-edit-task-form.component').then((m) => m.AddnewEditTaskFormComponent),
             
     // },
+    // {
+    //     path: 'view-task',
+    //     loadComponent: () =>
+    //         import('./components/view-task/view-task.component').then((m) => m.ViewTaskComponent),
+    // }
     {
-        path: 'view-task',
+        path: 'add-edit-board-form',
         loadComponent: () =>
-            import('./components/view-task/view-task.component').then((m) => m.ViewTaskComponent),
+            import('./components/add-edit-board-form/add-edit-board-form.component').then((m) => m.AddEditBoardFormComponent),
+        
     }
 ];
