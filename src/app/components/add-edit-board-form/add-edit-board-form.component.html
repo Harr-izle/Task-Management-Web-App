@@ -1,38 +1,26 @@
 <div class="bg-bg">
-    <form action="">
-  <h6>Add New Board</h6>
-  <!-- for edit -->
-  <h6>Edit Board</h6>
-<div class="name">
-<label for="">Name</label>
-  <input type="text" id="name" placeholder="e.g. Web Design">
-</div>
-
-<!-- columns -->
- <div class="columns">
-    <label for="">Columns</label>
-    <div class="col">
-        <input type="text" placeholder="Column 1">
-        <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#828FA3" fill-rule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
-    </div>
-    <!-- second -->
-    <div class="col">
-        <input type="text" placeholder="Column 1">
-        <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#828FA3" fill-rule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
+  <form [formGroup]="boardForm" (ngSubmit)="onSubmit()">
+    <h6>{{ isEditMode ? 'Edit Board' : 'Add New Board' }}</h6>
+    <div class="name">
+      <label for="name">Name</label>
+      <input type="text" id="name" formControlName="name" placeholder="e.g. Web Design">
     </div>
 
- </div>
+    <div class="columns" formArrayName="columns">
+      <label for="">Columns</label>
+      @for (column of columns.controls; track column; let i = $index) {
+        <div class="col" [formGroupName]="i">
+          <input type="text" formControlName="name" [placeholder]="'Column ' + (i + 1)">
+          <svg (click)="removeColumn(i)" width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#828FA3" fill-rule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
+        </div>
+      }
+    </div>
 
- <!-- buttons -->
-
- 
     <div class="butts">
-        <button class="add-col" type="add">+ Add New Column</button>
-    <button class="create" type="submit">Create New Board</button>
-    <!-- for edit -->
-    <button class="create" type="save">Save Changes</button>
+      <button class="add-col" type="button" (click)="addColumn()">+ Add New Column</button>
+      <button class="create" type="submit">
+        {{ isEditMode ? 'Save Changes' : 'Create New Board' }}
+      </button>
     </div>
- 
-
-    </form>
+  </form>
 </div>

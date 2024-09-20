@@ -5,17 +5,19 @@ import { Observable } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { selectSelectedBoard } from '../../state/board.selectors';
 import { IBoard } from '../../interfaces/board';
+import { AddEditBoardFormComponent } from '../add-edit-board-form/add-edit-board-form.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AddEditBoardFormComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   selectedBoard$: Observable<IBoard | undefined>;
   isDropdownOpen = false;
+  showEditForm = false;
 
   constructor(
     public themeService: ThemeService,
@@ -27,6 +29,11 @@ export class HeaderComponent {
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  editBoard() {
+    this.showEditForm = true;
+    this.isDropdownOpen = false;
   }
 
   @HostListener('document:click', ['$event'])

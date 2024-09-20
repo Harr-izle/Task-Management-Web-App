@@ -26,7 +26,7 @@ export const addBoardFailure = createAction(
 
 export const updateBoard = createAction(
   '[Board] Update Board',
-  props<{ board: IBoard }>()
+  props<{ id:string, changes:Partial<IBoard> }>()
 );
 export const updateBoardSuccess = createAction(
   '[Board] Update Board Success',

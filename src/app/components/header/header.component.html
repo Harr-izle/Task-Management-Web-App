@@ -1,34 +1,35 @@
 <div class="header">
     <div class="logo">
-        @if(themeService.currentTheme === 'light'){
-            <img src="../../../assets/svgs/logo-dark.svg" alt="logo">
-        }@else {
-            <img src="../../../assets/svgs/logo-light.svg" alt="">
-        }
+      @if(themeService.currentTheme === 'light'){
+        <img src="../../../assets/svgs/logo-dark.svg" alt="logo">
+      }@else {
+        <img src="../../../assets/svgs/logo-light.svg" alt="">
+      }
     </div>
     <div class="header-content">
-        <div class="board-name">
-            @if (selectedBoard$ | async; as board) {
-                <p>{{ board.name }}</p>
-            } @else {
-                <p>No board selected</p>
-            }
-            <span>
-                <img src="../../../assets/svgs/icon-chevron-down.svg" alt="down">
-            </span>
-        </div>
-        <div class="button">
-            <button class="add">
-                <img src="../../../assets/svgs/icon-add-task-mobile.svg" alt="add">
-                <span>Add New Task</span>
-            </button>
-            <img src="../../../assets/svgs/icon-vertical-ellipsis.svg" alt="icon" (click)="toggleDropdown()">
-            @if (isDropdownOpen) {
-                <div class="drop-down">
-                    <p>Edit Board</p>
-                    <span>Delete Board</span>
-                </div>
-            }
-        </div>
+      <div class="board-name">
+        @if (selectedBoard$ | async; as board) {
+          <p>{{ board.name }}</p>
+        } @else {
+          <p>No board selected</p>
+        }
+        <span>
+          <img src="../../../assets/svgs/icon-chevron-down.svg" alt="down">
+        </span>
+      </div>
+      <div class="button">
+        <button class="add">
+          <img src="../../../assets/svgs/icon-add-task-mobile.svg" alt="add">
+          <span>Add New Task</span>
+        </button>
+        <img src="../../../assets/svgs/icon-vertical-ellipsis.svg" alt="icon" (click)="toggleDropdown()">
+        @if (isDropdownOpen) {
+          <div class="drop-down">
+            <p (click)="editBoard()">Edit Board</p>
+            <span>Delete Board</span>
+          </div>
+        }
+      </div>
     </div>
-</div>
+  </div>
+  <app-add-edit-board-form *ngIf="showEditForm"></app-add-edit-board-form>
