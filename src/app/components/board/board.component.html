@@ -1,27 +1,45 @@
 <div class="task">
-  @if (selectedBoard$ | async; as board) {
-    @for (column of board.columns; track column.name) {
-      <div class="columns">
-        <p><span>.</span>{{ column.name }} ({{ column.tasks.length }})</p>
-        <div class="cards">
-          @for (task of column.tasks; track task.title) {
-            <div class="card">
-              <h6>{{ task.title }}</h6>
-              <span>{{ getCompletedSubtasks(task) }} of {{ task.subtasks.length }} subtasks</span>
-            </div>
-          }
-        </div>
-      </div>
-    }
-    <div class="column">
-      <div class="cards">
-        <div class="new-column" (click)="openEditBoardForm()">
-          <span>+ New Column</span>
-        </div>
-      </div>
-    </div>
+  @if (loading$ | async) {
+    <p>Loading boards...</p>
   } @else {
-    <p>No board selected</p>
+    @if (boards$ | async; as boards) {
+      @if (boards.length > 0) {
+        @if (selectedBoard$ | async; as board) {
+          <div class="task">
+            @for (column of board.columns; track column.name) {
+              <div class="columns">
+                <p><span>.</span>{{ column.name }} ({{ column.tasks.length }})</p>
+                <div class="cards">
+                  @for (task of column.tasks; track task.title) {
+                    <div class="card">
+                      <h6>{{ task.title }}</h6>
+                      <span>{{ getCompletedSubtasks(task) }} of {{ task.subtasks.length }} subtasks</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+            <div class="column">
+              <div class="cards">
+                <div class="new-column" (click)="openEditBoardForm()">
+                  <span>+ New Column</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <p>No board selected</p>
+        }
+      } @else {
+        <p>No boards available</p>
+      }
+    }
   }
+  
+  @if (showAddForm) {
+    <app-add-edit-board-form [isEditMode]="false" (formSubmitted)="onFormSubmitted()"></app-add-edit-board-form>
+  }
+
+  
+
 </div>
-<app-add-edit-board-form *ngIf="showEditForm"></app-add-edit-board-form>

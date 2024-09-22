@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import * as BoardActions from './board.actions';
 
@@ -10,9 +10,12 @@ import * as BoardActions from './board.actions';
 export class BoardEffects {
   loadBoards$ = createEffect(() => this.actions$.pipe(
     ofType(BoardActions.loadBoards),
+    tap(() => console.log('loadBoards action dispatched')),
     switchMap(() => this.apiService.getBoards()
       .pipe(
+        tap(data => console.log('Boards loaded in effect:', data)),
         map(data => BoardActions.loadBoardsSuccess({ boards: data.boards })),
+        tap(action => console.log('loadBoardsSuccess action dispatched:', action)),
         catchError(error => {
           console.error('Error loading boards:', error);
           return of(BoardActions.loadBoardsFailure({ error: error.message }));

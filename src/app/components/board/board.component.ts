@@ -15,12 +15,15 @@ import { AddEditBoardFormComponent } from '../add-edit-board-form/add-edit-board
   styleUrl: './board.component.scss'
 })
 export class BoardComponent implements OnInit {
+  boards$: Observable<IBoard[]>;
   selectedBoard$: Observable<IBoard | undefined>;
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
+  showAddForm = false;
   showEditForm = false;
 
   constructor(private store: Store) {
+    this.boards$ = this.store.select(selectBoards);
     this.selectedBoard$ = this.store.select(selectSelectedBoard);
     this.loading$ = this.store.select(selectBoardLoading);
     this.error$ = this.store.select(selectBoardError);
@@ -34,7 +37,18 @@ export class BoardComponent implements OnInit {
     return task.subtasks.filter(subtask => subtask.isCompleted).length;
   }
 
+  openAddBoardForm() {
+    this.showAddForm = true;
+    this.showEditForm = false;
+  }
+
   openEditBoardForm() {
     this.showEditForm = true;
+    this.showAddForm = false;
+  }
+
+  onFormSubmitted() {
+    this.showAddForm = false;
+    this.showEditForm = false;
   }
 }

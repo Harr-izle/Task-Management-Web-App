@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -15,11 +15,11 @@ import { selectSelectedBoard } from '../../state/board.selectors';
   styleUrl: './add-edit-board-form.component.scss'
 })
 export class AddEditBoardFormComponent {
+  @Input() isEditMode = false;
   @Output() formSubmitted = new EventEmitter<void>();
 
   boardForm: FormGroup;
   selectedBoard$: Observable<IBoard | undefined>;
-  isEditMode = false;
   currentBoardId: string | null = null;
   isSubmitting = false;
 
@@ -30,26 +30,25 @@ export class AddEditBoardFormComponent {
       columns: this.fb.array([])
     });
   }
-  ngOnInit() {
-    this.selectedBoard$.subscribe(board => {
-      if (board) {
-        this.isEditMode = true;
-        this.currentBoardId = board.id;
-        this.boardForm.patchValue({
-          name: board.name
-        });
-        this.columnsFormArray.clear();
-        board.columns.forEach(column => this.addColumn(column.name));
-      } else {
-        this.isEditMode = false;
-        this.currentBoardId = null;
-        this.boardForm.reset();
-        this.columnsFormArray.clear();
-        this.addColumn(); // Add one column by default for new boards
-      }
-    });
-  }
 
+  ngOnInit() {
+    if (this.isEditMode) {
+      this.selectedBoard$.subscribe(board => {
+        if (board) {
+          this.currentBoardId = board.id;
+          this.boardForm.patchValue({
+            name: board.name
+          });
+          this.columnsFormArray.clear();
+          board.columns.forEach(column => this.addColumn(column.name));
+        }
+      });
+    } else {
+      this.boardForm.reset();
+      this.columnsFormArray.clear();
+      this.addColumn(); // Add one column by default for new boards
+    }
+  }
   get columnsFormArray() {
     return this.boardForm.get('columns') as FormArray;
   }
@@ -70,7 +69,7 @@ export class AddEditBoardFormComponent {
       this.isSubmitting = true;
       const formValue = this.boardForm.value;
       const board: IBoard = {
-        id: this.currentBoardId || '',
+        id: this.isEditMode ? this.currentBoardId! : '',
         name: formValue.name,
         columns: formValue.columns.map((column: any) => ({
           name: column.name,
@@ -87,10 +86,9 @@ export class AddEditBoardFormComponent {
         this.store.dispatch(BoardActions.addBoard({ board }));
       }
 
-      // Reset the form and submission state
       this.boardForm.reset();
       this.isSubmitting = false;
       this.formSubmitted.emit();
     }
-  }
+}
 }

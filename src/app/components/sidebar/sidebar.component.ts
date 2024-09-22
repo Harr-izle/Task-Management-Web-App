@@ -36,7 +36,6 @@ export class SidebarComponent{
   }
 
   selectBoard(board: IBoard) {
-    this.selectedBoardId = board.id;
     this.store.dispatch(BoardActions.selectBoard({ boardId: board.id }));
   }
 
