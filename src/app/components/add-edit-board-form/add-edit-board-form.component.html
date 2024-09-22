@@ -6,14 +6,16 @@
       <input type="text" id="name" formControlName="name" placeholder="e.g. Web Design">
     </div>
 
-    <div class="columns" formArrayName="columns">
-      <label for="">Columns</label>
-      @for (column of columns.controls; track column; let i = $index) {
-        <div class="col" [formGroupName]="i">
-          <input type="text" formControlName="name" [placeholder]="'Column ' + (i + 1)">
-          <svg (click)="removeColumn(i)" width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#828FA3" fill-rule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
-        </div>
-      }
+    <div class="columns">
+      <label>Columns</label>
+      <div formArrayName="columns">
+        @for (column of columnsFormArray.controls; track column; let i = $index) {
+          <div class="col" [formGroupName]="i">
+            <input type="text" formControlName="name" placeholder="Column {{i + 1}}">
+            <svg (click)="removeColumn(i)" width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#828FA3" fill-rule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
+          </div>
+        }
+      </div>
     </div>
 
     <div class="butts">

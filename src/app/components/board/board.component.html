@@ -15,7 +15,7 @@
     }
     <div class="column">
       <div class="cards">
-        <div class="new-column" (click)="addNewColumn()">
+        <div class="new-column" (click)="openEditBoardForm()">
           <span>+ New Column</span>
         </div>
       </div>
@@ -24,4 +24,4 @@
     <p>No board selected</p>
   }
 </div>
-<app-add-edit-board-form *ngIf="showAddEditForm"></app-add-edit-board-form>
+<app-add-edit-board-form *ngIf="showEditForm"></app-add-edit-board-form>

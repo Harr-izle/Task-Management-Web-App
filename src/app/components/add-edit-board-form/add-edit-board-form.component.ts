@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IBoard } from '../../interfaces/board';
 import * as BoardActions from '../../state/board.actions';
 import { selectSelectedBoard } from '../../state/board.selectors';
+
 @Component({
   selector: 'app-add-edit-board-form',
   standalone: true,
@@ -14,68 +15,82 @@ import { selectSelectedBoard } from '../../state/board.selectors';
   styleUrl: './add-edit-board-form.component.scss'
 })
 export class AddEditBoardFormComponent {
+  @Output() formSubmitted = new EventEmitter<void>();
+
   boardForm: FormGroup;
+  selectedBoard$: Observable<IBoard | undefined>;
   isEditMode = false;
-  private subscription: Subscription;
+  currentBoardId: string | null = null;
+  isSubmitting = false;
 
   constructor(private fb: FormBuilder, private store: Store) {
+    this.selectedBoard$ = this.store.select(selectSelectedBoard);
     this.boardForm = this.fb.group({
       name: ['', Validators.required],
       columns: this.fb.array([])
     });
-
-    this.subscription = this.store.select(selectSelectedBoard).subscribe(board => {
+  }
+  ngOnInit() {
+    this.selectedBoard$.subscribe(board => {
       if (board) {
         this.isEditMode = true;
+        this.currentBoardId = board.id;
         this.boardForm.patchValue({
           name: board.name
         });
+        this.columnsFormArray.clear();
         board.columns.forEach(column => this.addColumn(column.name));
+      } else {
+        this.isEditMode = false;
+        this.currentBoardId = null;
+        this.boardForm.reset();
+        this.columnsFormArray.clear();
+        this.addColumn(); // Add one column by default for new boards
       }
     });
   }
 
-  ngOnInit() {}
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  get columns() {
+  get columnsFormArray() {
     return this.boardForm.get('columns') as FormArray;
   }
 
   addColumn(name: string = '') {
-    this.columns.push(this.fb.group({
+    this.columnsFormArray.push(this.fb.group({
       name: [name, Validators.required]
     }));
   }
 
   removeColumn(index: number) {
-    this.columns.removeAt(index);
+    this.columnsFormArray.removeAt(index);
   }
 
+ 
   onSubmit() {
-    if (this.boardForm.valid) {
+    if (this.boardForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
       const formValue = this.boardForm.value;
       const board: IBoard = {
-        id: this.isEditMode ? (this.boardForm.value as IBoard).id : '', // Use existing ID for edit mode
+        id: this.currentBoardId || '',
         name: formValue.name,
-        columns: formValue.columns.map((column: { name: string }) => ({
+        columns: formValue.columns.map((column: any) => ({
           name: column.name,
           tasks: []
         }))
       };
 
-      if (this.isEditMode) {
-      console.log('if');
-      this.store.dispatch(BoardActions.updateBoard({ id: board.id, changes: board }));
-    } else {
-      console.log('else');
-      this.store.dispatch(BoardActions.addBoard({ board }));
+      if (this.isEditMode && this.currentBoardId) {
+        this.store.dispatch(BoardActions.updateBoard({ 
+          id: this.currentBoardId, 
+          changes: board 
+        }));
+      } else {
+        this.store.dispatch(BoardActions.addBoard({ board }));
       }
+
+      // Reset the form and submission state
+      this.boardForm.reset();
+      this.isSubmitting = false;
+      this.formSubmitted.emit();
     }
   }
 }

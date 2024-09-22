@@ -20,12 +20,16 @@ export const initialState: BoardState = adapter.getInitialState({
 export const boardReducer = createReducer(
   initialState,
   on(BoardActions.loadBoards, state => ({ ...state, loading: true })),
-  on(BoardActions.loadBoardsSuccess, (state, { boards }) => 
-    adapter.setAll(boards, { ...state, loading: false })
-  ),
-  on(BoardActions.loadBoardsFailure, (state, { error }) => 
-    ({ ...state, loading: false, error })
-  ),
+  on(BoardActions.loadBoardsSuccess, (state, { boards }) => ({
+    ...state,
+    boards,
+    loading: false
+  })),
+  on(BoardActions.loadBoardsFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false
+  })),
   on(BoardActions.selectBoard, (state, { boardId }) => 
     ({ ...state, selectedBoardId: boardId })
   ),

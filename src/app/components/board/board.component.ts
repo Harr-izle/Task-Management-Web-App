@@ -18,7 +18,7 @@ export class BoardComponent implements OnInit {
   selectedBoard$: Observable<IBoard | undefined>;
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
-  showAddEditForm = false;
+  showEditForm = false;
 
   constructor(private store: Store) {
     this.selectedBoard$ = this.store.select(selectSelectedBoard);
@@ -30,12 +30,11 @@ export class BoardComponent implements OnInit {
     this.store.dispatch(BoardActions.loadBoards());
   }
 
-  addNewColumn() {
-    this.showAddEditForm = true;
-  }
-
   getCompletedSubtasks(task: ITask): number {
     return task.subtasks.filter(subtask => subtask.isCompleted).length;
   }
 
+  openEditBoardForm() {
+    this.showEditForm = true;
+  }
 }
