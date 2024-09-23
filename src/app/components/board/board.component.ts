@@ -1,54 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskComponent } from '../task/task.component';
+import { Column } from '../../interface/board';
+import { deleteTask, updateTask } from '../../state/board.actions';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { IBoard, IColumn, ITask } from '../../interfaces/board';
-import { selectBoardError, selectBoardLoading, selectBoards, selectSelectedBoard} from '../../state/board.selectors';
-import * as BoardActions from '../../state/board.actions';
-import { AddEditBoardFormComponent } from '../add-edit-board-form/add-edit-board-form.component';
+import { BoardService } from '../../services/board.service';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, AddEditBoardFormComponent],
+  imports: [TaskComponent, CommonModule],
   templateUrl: './board.component.html',
-  styleUrl: './board.component.scss'
+  styleUrl: './board.component.scss',
 })
-export class BoardComponent implements OnInit {
-  boards$: Observable<IBoard[]>;
-  selectedBoard$: Observable<IBoard | undefined>;
-  loading$: Observable<boolean>;
-  error$: Observable<string | null>;
-  showAddForm = false;
-  showEditForm = false;
-
-  constructor(private store: Store) {
-    this.boards$ = this.store.select(selectBoards);
-    this.selectedBoard$ = this.store.select(selectSelectedBoard);
-    this.loading$ = this.store.select(selectBoardLoading);
-    this.error$ = this.store.select(selectBoardError);
+export class BoardComponent {
+  @Input('column') column!: Column;
+  @Input() boardId!: string;
+  constructor(private store: Store, public BoardService: BoardService) {}
+  onDragStart(
+    event: DragEvent,
+    taskTitle: string,
+    sourceColumnName: string
+  ): void {
+    event.dataTransfer?.setData(
+      'text/plain',
+      JSON.stringify({ taskTitle, sourceColumnName })
+    );
   }
-
-  ngOnInit() {
-    this.store.dispatch(BoardActions.loadBoards());
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
   }
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
 
-  getCompletedSubtasks(task: ITask): number {
-    return task.subtasks.filter(subtask => subtask.isCompleted).length;
-  }
+    const data = event.dataTransfer?.getData('text/plain');
+    if (data) {
+      const { taskTitle, sourceColumnName } = JSON.parse(data);
 
-  openAddBoardForm() {
-    this.showAddForm = true;
-    this.showEditForm = false;
-  }
+      if (sourceColumnName === this.column.name) return;
 
-  openEditBoardForm() {
-    this.showEditForm = true;
-    this.showAddForm = false;
-  }
+      this.store.dispatch(
+        updateTask({
+          boardId: this.BoardService.currentBoardId,
+          columnName: sourceColumnName,
+          task: {
+            ...this.BoardService.task,
+            status: this.column.name,
+          },
+        })
+      );
 
-  onFormSubmitted() {
-    this.showAddForm = false;
-    this.showEditForm = false;
+      this.store.dispatch(
+        deleteTask({
+          boardId: this.BoardService.currentBoardId,
+          columnName: sourceColumnName,
+          taskTitle: taskTitle,
+        })
+      );
+    }
   }
 }

@@ -1,43 +1,134 @@
 import { createReducer, on } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { IBoard } from '../interfaces/board';
-import * as BoardActions from './board.actions';
+import * as storeActions from '../state/board.actions';
+import { BoardState, Task } from '../interface/board';
 
-export interface BoardState extends EntityState<IBoard> {
-  selectedBoardId: string | null;
-  loading: boolean;
-  error: any;
-}
+export const initialState: BoardState = {
+  boards: [],
+};
 
-export const adapter: EntityAdapter<IBoard> = createEntityAdapter<IBoard>();
-
-export const initialState: BoardState = adapter.getInitialState({
-  selectedBoardId: null,
-  loading: false,
-  error: null,
-});
-
-export const boardReducer = createReducer(
+export const BoardReducer = createReducer(
   initialState,
-  on(BoardActions.loadBoards, state => ({ ...state, loading: true })),
-  on(BoardActions.loadBoardsSuccess, (state, { boards }) => 
-    adapter.setAll(boards, { ...state, loading: false })
-  ),
-  on(BoardActions.loadBoardsFailure, (state, { error }) => ({
+  on(storeActions.fetchBoardsSuccess, (state, { boards }) => ({
     ...state,
-    error,
-    loading: false
+    boards: boards,
   })),
-  on(BoardActions.selectBoard, (state, { boardId }) => 
-    ({ ...state, selectedBoardId: boardId })
-  ),
-  on(BoardActions.addBoardSuccess, (state, { board }) =>
-    adapter.addOne(board, state)
-  ),
-  on(BoardActions.updateBoardSuccess, (state, { board }) =>
-    adapter.updateOne({ id: board.id, changes: board }, state)
-  ),
-  on(BoardActions.deleteBoardSuccess, (state, { id }) =>
-    adapter.removeOne(id, state)
-  )
+  on(storeActions.addBoard, (state, { board }) => {
+    const updatedBoards = [...state.boards, { ...board, isActive: false }];
+    const boardsWithActiveStatus =
+      updatedBoards.length === 1
+        ? updatedBoards.map((b, index) => ({
+            ...b,
+            isActive: index === 0,
+          }))
+        : updatedBoards;
+
+    return {
+      ...state,
+      boards: boardsWithActiveStatus,
+    };
+  }),
+  on(storeActions.updateBoard, (state, { board }) => {
+    const updatedBoards = state.boards.map((b) =>
+      b.id === board.id ? { ...board } : b
+    );
+    return { ...state, boards: updatedBoards };
+  }),
+
+  on(storeActions.setActiveBoard, (state, { boardId }) => ({
+    ...state,
+    boards: state.boards.map((board) => {
+      if (board.id === boardId) {
+        return { ...board, isActive: true };
+      } else {
+        return { ...board, isActive: false };
+      }
+    }),
+  })),
+  on(storeActions.deleteBoard, (state, { boardId }) => {
+    const updatedBoards = state.boards.filter((board) => board.id !== boardId);
+    const boardsWithActiveStatus =
+      updatedBoards.length > 0
+        ? updatedBoards.map((board, index) => ({
+            ...board,
+            isActive: index === 0,
+          }))
+        : [];
+
+    return {
+      ...state,
+      boards: boardsWithActiveStatus,
+    };
+  }),
+
+  on(storeActions.addTask, (state, { boardId, columnName, task }) => {
+    const updatedBoards = state.boards.map((board) => {
+      if (board.id === boardId) {
+        const updatedColumns = board.columns.map((column) => {
+          if (column.name === columnName) {
+            return {
+              ...column,
+              tasks: [...column.tasks, task], 
+            };
+          }
+          return column;
+        });
+
+        return {
+          ...board,
+          columns: updatedColumns,
+        };
+      }
+      return board;
+    });
+
+    return { ...state, boards: updatedBoards };
+  }),
+  on(storeActions.updateTask, (state, { boardId, columnName, task }) => {
+    const updatedBoards = state.boards.map((board) => {
+      if (board.id === boardId) {
+        const updatedColumns = board.columns.map((column) => {
+          if (column.name === columnName && columnName === task.status) {
+            const updatedTasks = column.tasks.map((t) =>
+              t.title === task.title ? { ...task } : t
+            );
+            return { ...column, tasks: updatedTasks };
+          }
+          if (column.name === columnName && columnName !== task.status) {
+            return {
+              ...column,
+              tasks: column.tasks.filter((t) => t.title !== task.title),
+            };
+          }
+          if (column.name === task.status && columnName !== task.status) {
+            return {
+              ...column,
+              tasks: [...column.tasks, { ...task }],
+            };
+          }
+          return column;
+        });
+        return { ...board, columns: updatedColumns };
+      }
+      return board;
+    });
+    return { ...state, boards: updatedBoards };
+  }),
+  on(storeActions.deleteTask, (state, { boardId, columnName, taskTitle }) => {
+    const updatedBoards = state.boards.map((board) => {
+      if (board.id === boardId) {
+        const updatedColumns = board.columns.map((column) => {
+          if (column.name === columnName) {
+            return {
+              ...column,
+              tasks: column.tasks.filter((task) => task.title !== taskTitle),
+            };
+          }
+          return column;
+        });
+        return { ...board, columns: updatedColumns };
+      }
+      return board;
+    });
+    return { ...state, boards: updatedBoards };
+  })
 );

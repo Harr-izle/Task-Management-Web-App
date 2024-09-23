@@ -1,0 +1,9 @@
+<div
+  class="container"
+  (click)="BoardService.editSubTaskModal(task, columName)"
+  #container
+>
+  <p class="taskname">{{ task.title }}</p>
+  <p class="subtasks">{{ completedTasks }} of {{ task.subtasks.length }} subtasks</p>
+</div>
+ 
