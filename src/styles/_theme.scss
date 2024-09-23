@@ -11,8 +11,10 @@ $light-mode: (
   "sub-text": $sub-text,
   "btn-sub": $btn-sub,
   "line": $line-light,
-  "secondary": $button-secondary,
+  "secondary":$button-secondary-light,
+  "secondary-hover":$button-secondary-hover-light,
   "column":$new-column-bg-light,
+  "form-text":$form-text-light,
   
 );
 
@@ -26,7 +28,9 @@ $dark-mode: (
   "sub-text": $sub-text,
   "btn-sub": $btn-sub,
   "line": $line-dark,
-  "secondary": $button-secondary-hover,
+  "secondary": $button-secondary-dark,
   "column":$new-column-bg-dark,
+  "form-text":$form-text-dark,
+  "secondary-hover":$button-secondary-hover-dark,
   
 );

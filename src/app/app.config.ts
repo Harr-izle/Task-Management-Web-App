@@ -6,8 +6,8 @@ import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { boardReducer } from './state/board.reducers';
-import { BoardEffects } from './state/board.effects';
+import { BoardReducer } from './state/board.reducers';
+import { BoardEffect } from './state/board.effect';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {
@@ -15,12 +15,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),
-    provideStore({ board: boardReducer }),
+    provideStore({ board: BoardReducer }),
     provideState({
       name: 'board',
-      reducer:boardReducer
+      reducer:BoardReducer
     }),
-    provideEffects(BoardEffects),
+    provideEffects(BoardEffect),
     provideStoreDevtools({maxAge:25, logOnly: false}),
   ]
 };

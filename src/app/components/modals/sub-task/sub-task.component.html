@@ -1,0 +1,76 @@
+<div class="container">
+    <form [formGroup]="taskForm">
+      <div class="titlewrap">
+        <p>{{ BoardService.task.title }}</p>
+        <!-- edit task svg -->
+        <svg
+          (click)="BoardService.toggleTaskMenu()"
+          width="5"
+          height="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g fill="#828FA3" fill-rule="evenodd">
+            <circle cx="2.308" cy="2.308" r="2.308" />
+            <circle cx="2.308" cy="10" r="2.308" />
+            <circle cx="2.308" cy="17.692" r="2.308" />
+          </g>
+        </svg>
+  
+        <!-- float menu -->
+        <div class="editboardmenu" *ngIf="BoardService.editTaskMenu">
+          <!-- float menu -->
+          <div class="floatmenu">
+            <p class="editboard" (click)="BoardService.editTask()">Edit Task</p>
+            <p class="deleteboard" (click)="BoardService.deleteTask()">
+              Delete Task
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- description -->
+      <p class="description">{{ BoardService.task.description }}</p>
+  
+      <!-- subtasks -->
+      <div formArrayName="subtasks" class="subtasks">
+        <p class="completedtext">
+          Subtask ({{ completedSubtask }} out of {{ totalSubtask }})
+        </p>
+        <div
+          class="subtaskwrap"
+          *ngFor="let subtask of subtasks.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <input
+            type="checkbox"
+            formControlName="isCompleted"
+            (change)="updateSubtask()"
+          />
+          <p
+            [class.ticked]="subtask.get('isCompleted')?.value"
+            class="subTask-name"
+          >
+            {{ subtask.get("title")?.value }}
+          </p>
+        </div>
+      </div>
+  
+      <!-- status -->
+      <div class="statuswrap">
+        <p class="currentstats-text">Current Status</p>
+        <select
+          id="status"
+          formControlName="status"
+          [ngModel]="BoardService.columName"
+        >
+          <!-- loads current status in the task parent active Board -->
+          <option
+            *ngFor="let task of BoardService.boardColumns"
+            [value]="task.name"
+          >
+            {{ task.name }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>

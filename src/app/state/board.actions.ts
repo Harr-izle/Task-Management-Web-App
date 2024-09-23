@@ -1,56 +1,65 @@
 import { createAction, props } from '@ngrx/store';
-import { IBoard } from '../interfaces/board';
+import { Board, Task } from '../interface/board';
 
-export const loadBoards = createAction('[Board] Load Boards');
-export const loadBoardsSuccess = createAction(
-  '[Board] Load Boards Success',
-  props<{ boards: IBoard[] }>()
+
+export const fetchBoards = createAction('[Kanban] Fetch Boards');
+
+export const fetchBoardsSuccess = createAction(
+  '[Board] Fetch Boards Success',
+  props<{ boards: Board[] }>()
 );
-export const loadBoardsFailure = createAction(
-  '[Board] Load Boards Failure',
+
+// If fetching boards fails
+export const fetchBoardsFailure = createAction(
+  '[Board] Fetch Boards Failure',
   props<{ error: any }>()
 );
+
 
 export const addBoard = createAction(
   '[Board] Add Board',
-  props<{ board: IBoard }>()
-);
-export const addBoardSuccess = createAction(
-  '[Board] Add Board Success',
-  props<{ board: IBoard }>()
-);
-export const addBoardFailure = createAction(
-  '[Board] Add Board Failure',
-  props<{ error: any }>()
+  props<{ board: Board }>()
 );
 
 export const updateBoard = createAction(
   '[Board] Update Board',
-  props<{ board: IBoard }>()
+  props<{ board: Board }>()
 );
-export const updateBoardSuccess = createAction(
-  '[Board] Update Board Success',
-  props<{ board: IBoard }>()
+
+
+export const setActiveBoard = createAction(
+  '[Board] Set Active Board',
+  props<{ boardId: string }>()
 );
-export const updateBoardFailure = createAction(
-  '[Board] Update Board Failure',
-  props<{ error: any }>()
-);
+
 
 export const deleteBoard = createAction(
   '[Board] Delete Board',
-  props<{ id: string }>()
-);
-export const deleteBoardSuccess = createAction(
-  '[Board] Delete Board Success',
-  props<{ id: string }>()
-);
-export const deleteBoardFailure = createAction(
-  '[Board] Delete Board Failure',
-  props<{ error: any }>()
+  props<{ boardId: string }>()
 );
 
-export const selectBoard = createAction(
-  '[Board] Select Board',
-  props<{ boardId: string }>()
+export const addTask = createAction(
+  '[Board] Add Task',
+  props<{
+    boardId: string;
+    columnName: string;
+    task: Task;
+  }>()
+);
+
+
+export const updateTask = createAction(
+  '[Board] Update Task or subTask',
+  props<{ boardId: string; columnName: string; task: Task }>()
+);
+
+
+export const deleteTask = createAction(
+  '[Task] Delete Task',
+  props<{ boardId: string; columnName: string; taskTitle: string }>()
+);
+
+export const moveTask = createAction(
+  '[Task] Move Task',
+  props<{ taskTitle: string; sourceColumnName: string; targetColumnName: string }>()
 );
